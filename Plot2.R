@@ -17,7 +17,7 @@ full_data[,9] <- as.numeric(full_data[,9])
 
 ##Set data from 2007-02-01 and 2007-02-02.
 l <- c("2007/02/01","2007/02/02")
-y <-as.Date(l,"%Y-%m-%d") 
+y <-as.Date(l,"%Y/%m/%d") 
 data_set <- subset(full_data, Date==y[1]|Date==y[2])
 
 ##Set data needed on plot2

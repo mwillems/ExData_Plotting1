@@ -17,21 +17,23 @@ full_data[,9] <- as.numeric(full_data[,9])
 
 ##Set data from 2007-02-01 and 2007-02-02.
 l <- c("2007/02/01","2007/02/02")
-y <-as.Date(l,"%Y/%m/%d") 
-
+y <-as.Date(l,"%Y-%m-%d") 
 data_set <- subset(full_data, Date==y[1]|Date==y[2])
 
+##Set data needed on plot3
+data_set2 <- data_set[,c(1,2,7,8,9)]
+data_set2$Time <- strptime(paste(data_set[,1],data_set[,2]),"%Y-%m-%d %H:%M:%S")
 
-##Extract data to crate first plot 1
-ex <- data_set$Global_active_power
+names(data_set2)
 
-##Histo
-##h <- hist(ex,br=12,col="red",xlab="Global Active Power (kilowatts)",ylab="Frequency", freq=TRUE,main="Global Active Power")
-
-##Create file plot1.png
-png("Plot1.png",width=480,height=480,units="px",type = "cairo-png")
-hist(ex,br=12,col="red",xlab="Global Active Power (kilowatts)",ylab="Frequency", freq=TRUE,main="Global Active Power")
+##Create file plot3.png
+png("Plot3.png",width=480,height=480,units="px",type = "cairo-png")
+plot(data_set2$Time,data_set2$Sub_metering_1,type="l",ylab="Energy Sub Metering",xlab="", col="black")
+lines(data_set2$Time,data_set2$Sub_metering_2,type="l", col="red")
+lines(data_set2$Time,data_set2$Sub_metering_3,type="l", col="blue")
+legend("topright", names(data_set2[,c(3,4,5)]), cex=0.8, col=c("black", "red", "blue"),lty=1:3, lwd=2, bty="o")
 dev.off()
+
 
 
 
